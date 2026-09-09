@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write Back — For Saheb</title>
+<link rel="stylesheet" href="style.css">
+<style>body{ --page-accent: var(--rose); --page-wash: rgba(224,96,125,0.18); --page-wash-2: rgba(140,47,69,0.10); }</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <div class="brand">Aaho & Saheb</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="moments.html">Moments</a></li>
+      <li><a href="journey.html">Journey</a></li>
+      <li><a href="play.html">Play</a></li>
+      <li><a href="propose.html">?</a></li>
+      <li><a href="message.html" class="active">Reply</a></li>
+      <li><a href="closing.html">Note</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-band">
+    <div class="kicker">YOUR TURN</div>
+    <h1>Say something back to me.</h1>
+    <p>Write whatever you want here, then send it to me straight from this page.</p>
+  </div>
+
+  <div class="message-box">
+    <textarea id="msgInput" placeholder="Write your reply here..."></textarea>
+    <div class="message-actions">
+      <a class="msg-btn" id="waSend" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+      <button class="msg-btn secondary" id="copyBtn">Copy Message</button>
+    </div>
+    <div class="copy-note" id="copyNote"></div>
+  </div>
+
+  <div class="page-turn">
+    <a href="propose.html">← One More Thing</a>
+    <a class="next" href="closing.html">Read My Note →</a>
+  </div>
+</div>
+
+<footer class="credit">made with a lot of chai and a little bit of chaos</footer>
+
+<script src="hearts.js"></script>
+<script>
+  const input = document.getElementById('msgInput');
+  const waLink = document.getElementById('waSend');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyNote = document.getElementById('copyNote');
+
+  function updateWaLink(){
+    const text = input.value.trim() || "Hey, I read your site. Here's my reply:";
+    waLink.href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(text);
+  }
+  input.addEventListener('input', updateWaLink);
+  updateWaLink();
+
+  copyBtn.addEventListener('click', function(){
+    const text = input.value.trim();
+    if(!text){ copyNote.textContent = "Write something first."; return; }
+    navigator.clipboard.writeText(text).then(function(){
+      copyNote.textContent = "Copied — paste it wherever you want to send it.";
+    }).catch(function(){
+      copyNote.textContent = "Couldn't copy automatically — select the text and copy it manually.";
+    });
+  });
+</script>
+</body>
+</html>
